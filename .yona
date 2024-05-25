@@ -1,0 +1,2 @@
+show = pwd && cat .yona
+build = source .env && cp twist $SOMEWHERE_ON_PATH 
