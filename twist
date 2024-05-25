@@ -1,0 +1,27 @@
+#!/bin/fish
+
+argparse j/json b/body -- $argv
+
+set header_file $(mktemp --tmpdir twist_header.XXX)
+set body_file $(mktemp --tmpdir twist_body.XXX)
+
+set header_format "%output{$header_file}\
+Content-Type: %header{content-type}
+Date: %header{date}
+Connection: %header{connection}
+Keep-Alive: %header{keep-alive}
+Transfer-Encoding: %header{transfer-encoding}"
+
+curl --write-out $header_format -X $argv[1] $argv[2] $_flag_body > $body_file
+
+bat --language YAML --file-name 'HEADER' $header_file
+
+if set -ql _flag_json
+    echo 'BODY'
+    jq . $body_file
+else
+    bat --file-name 'BODY' $body_file
+end
+
+rm $header_file
+rm $body_file
