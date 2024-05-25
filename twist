@@ -1,6 +1,7 @@
 #!/bin/fish
 
 argparse 'h/help' 't/body-type=+' 's/send=+' -- $argv
+or return
 
 if set -ql _flag_help
     echo "\
