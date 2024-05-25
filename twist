@@ -1,6 +1,6 @@
 #!/bin/fish
 
-argparse h/help t/body-type s/send -- $argv
+argparse 'h/help' 't/body-type=+' 's/send=+' -- $argv
 
 if set -ql _flag_help
     echo "\
@@ -31,7 +31,7 @@ curl --write-out $header_format -X $argv[1] $argv[2] $_flag_body > $body_file
 
 bat --language YAML --file-name 'HEADER' $header_file
 
-if set -ql _flag_body-type
+if set -ql _flag_t
     bat --language $_flag_t --file-name 'BODY' $body_file
 else
     echo 'BODY'
