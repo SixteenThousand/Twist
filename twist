@@ -3,6 +3,8 @@
 argparse 'h/help' 't/body-type=+' 's/send=+' -- $argv
 or return
 
+
+# print help message, if specified
 if set -ql _flag_help
     echo "\
 twist [OPTIONS] [HTTP_METHOD] [URL] [[-s | --send] REQUEST_BODY_FILE]
@@ -18,6 +20,7 @@ OPTIONS:
 end
 
 
+# files to dump received data into
 set header_file $(mktemp --tmpdir twist_header.XXX)
 set body_file $(mktemp --tmpdir twist_body.XXX)
 
@@ -28,10 +31,16 @@ Connection: %header{connection}
 Keep-Alive: %header{keep-alive}
 Transfer-Encoding: %header{transfer-encoding}"
 
+
+# this is where the *magic* happens
 curl --write-out $header_format -X $argv[1] $argv[2] $_flag_body > $body_file
 
+
+# print out the received data
+# HTTP headers
 bat --language YAML --file-name 'HEADER' $header_file
 
+# response body
 if set -ql _flag_t
     bat --language $_flag_t --file-name 'BODY' $body_file
 else
@@ -39,5 +48,7 @@ else
     jq . $body_file
 end
 
+
+# cleanup
 rm $header_file
 rm $body_file
