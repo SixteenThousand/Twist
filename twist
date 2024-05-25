@@ -16,7 +16,11 @@ Use the --send/-s option to specify a request body from a file. The file
 must be in JSON format.
 
 OPTIONS:
--t | --body-type : the format of the response body. Defaults to JSON."
+-t | --body-type : The format of the response body. Defaults to JSON.
+-m | --header-output : The name of a file in which to dump the received
+    header data. If unspecified, dumps it into a temporary file.
+-o | --body-output : The name of a file in which to dump the received
+    header data. If unspecified, dumps it into a temporary file."
     return 0
 end
 

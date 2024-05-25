@@ -15,6 +15,10 @@ must be in JSON format.
 
 OPTIONS:
 -t | --body-type : the format of the response body. Defaults to JSON.
+-m | --header-output : The name of a file in which to dump the received
+    header data. If unspecified, dumps it into a temporary file.
+-o | --body-output : The name of a file in which to dump the received
+    header data. If unspecified, dumps it into a temporary file.
 ```
 
 ### Dependencies
