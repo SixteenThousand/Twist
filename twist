@@ -33,7 +33,16 @@ Transfer-Encoding: %header{transfer-encoding}"
 
 
 # this is where the *magic* happens
-curl --write-out $header_format -X $argv[1] $argv[2] $_flag_body > $body_file
+if set -ql _flag_send
+    curl --write-out $header_format \
+        -X $argv[1] $argv[2] \
+        --json "$(cat $_flag_send)" \
+        > $body_file
+else
+    curl --write-out $header_format \
+        -X $argv[1] $argv[2] \
+        > $body_file
+end
 
 
 # print out the received data
