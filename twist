@@ -1,6 +1,7 @@
 #!/bin/fish
 
-argparse 'h/help' 't/body-type=+' 's/send=+' -- $argv
+argparse 'h/help' 't/body-type=+' 's/send=+' \
+    'm/header-output=+' 'o/body-output=+' -- $argv
 or return
 
 
@@ -21,8 +22,16 @@ end
 
 
 # files to dump received data into
-set header_file $(mktemp --tmpdir twist_header.XXX)
-set body_file $(mktemp --tmpdir twist_body.XXX)
+if set -ql _flag_m
+    set header_file $_flag_m
+else
+    set header_file $(mktemp --tmpdir twist_header.XXX)
+end
+if set -ql _flag_o
+    set body_file $_flag_o
+else
+    set body_file $(mktemp --tmpdir twist_body.XXX)
+end
 
 set header_format "%output{$header_file}\
 Content-Type: %header{content-type}
@@ -59,5 +68,9 @@ end
 
 
 # cleanup
-rm $header_file
-rm $body_file
+if not set -ql _flag_m
+    rm $header_file
+end
+if not set -ql _flag_o
+    rm $body_file
+end
