@@ -19,6 +19,7 @@ OPTIONS:
     header data. If unspecified, dumps it into a temporary file.
 -o | --body-output : The name of a file in which to dump the received
     header data. If unspecified, dumps it into a temporary file.
+-v | --version : print version information
 ```
 
 ### Dependencies

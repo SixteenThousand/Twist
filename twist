@@ -1,6 +1,7 @@
 #!/bin/fish
 
-argparse 'h/help' 't/body-type=+' 's/send=+' \
+argparse 'h/help' 'v/version' \
+    't/body-type=+' 's/send=+' \
     'm/header-output=+' 'o/body-output=+' -- $argv
 or return
 
@@ -20,7 +21,13 @@ OPTIONS:
 -m | --header-output : The name of a file in which to dump the received
     header data. If unspecified, dumps it into a temporary file.
 -o | --body-output : The name of a file in which to dump the received
-    header data. If unspecified, dumps it into a temporary file."
+    header data. If unspecified, dumps it into a temporary file.
+-v | --version : print version information"
+    return 0
+end
+
+if set -ql _flag_version
+    echo "twist version 1.0"
     return 0
 end
 
