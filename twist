@@ -1,6 +1,6 @@
 #!/bin/fish
 
-argparse j/json b/body -- $argv
+argparse t/body-type s/send -- $argv
 
 set header_file $(mktemp --tmpdir twist_header.XXX)
 set body_file $(mktemp --tmpdir twist_body.XXX)
@@ -16,11 +16,11 @@ curl --write-out $header_format -X $argv[1] $argv[2] $_flag_body > $body_file
 
 bat --language YAML --file-name 'HEADER' $header_file
 
-if set -ql _flag_json
+if set -ql _flag_body-type
+    bat --language $_flag_t --file-name 'BODY' $body_file
+else
     echo 'BODY'
     jq . $body_file
-else
-    bat --file-name 'BODY' $body_file
 end
 
 rm $header_file
