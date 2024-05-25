@@ -1,6 +1,21 @@
 #!/bin/fish
 
-argparse t/body-type s/send -- $argv
+argparse h/help t/body-type s/send -- $argv
+
+if set -ql _flag_help
+    echo "\
+twist [OPTIONS] [HTTP_METHOD] [URL] [[-s | --send] REQUEST_BODY_FILE]
+
+Uses curl to send a http request. URL is the url to send the request to,
+& HTTP_METHOD is the http method (GET,POST,PATCH,etc.) to use.
+Use the --send/-s option to specify a request body from a file. The file 
+must be in JSON format.
+
+OPTIONS:
+-t | --body-type : the format of the response body. Defaults to JSON."
+    return 0
+end
+
 
 set header_file $(mktemp --tmpdir twist_header.XXX)
 set body_file $(mktemp --tmpdir twist_body.XXX)
