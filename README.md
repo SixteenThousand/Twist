@@ -1,3 +1,10 @@
+### Notice
+
+This script has now been moved into the Shore repo 
+(<https://github.com/SixteenThousand/Shore>). Any further updates on its 
+development will be done there. As of now (September 2024) this repo should 
+be considered dead.
+
 ## Twist
 
 This is just a very basic wrapper around cURL that lets you make HTTP 
